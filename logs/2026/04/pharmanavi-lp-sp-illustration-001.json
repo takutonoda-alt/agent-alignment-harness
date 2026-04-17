@@ -1,0 +1,24 @@
+{
+  "id": "pharmanavi-lp-sp-illustration-001",
+  "date": "2026-04-17",
+  "repo": "hanaseru-md/pharmanavi",
+  "commit": "494bbe0",
+  "intent": "SP版ヒーローイラストを中央配置する",
+  "mismatch_type": "env_precondition_miss",
+  "symptom": "イラストが画面左下に小さく表示され続ける。w-full / self-stretch / items-stretch など複数の修正を試みても改善しない。",
+  "root_cause": "Tailwind preflight が img { max-width: 100% } を設定するため、w-[164%] class による幅指定が親要素幅(100%)に切り詰められていた。さらに -ml-[61%] の負マージンにより画像の大部分が左に押し出され、右端の小片のみ表示されていた。overflow-hidden によるBFC生成がflexアイテムの幅計算を阻害した問題(2番目の原因)も重なっていた。",
+  "detection": "ユーザーの複数回『まだ治ってない』フィードバック後、DevToolsでHTML/CSSを確認。コンテナのクラスは正しいが画像が極小であることから、CSS max-widthの制限に気づいた。",
+  "fix": "1) SPイラストをpx-5パディング済みコンテナ外のsectionレベルに移動(flex BFC問題を回避)。2) imgに max-w-none を追加してTailwind preflightのmax-width:100%を上書き。",
+  "preventive_rule": "Next.js + Tailwind環境でimgに親要素幅を超える%幅(w-[N%] where N>100)を指定する場合は必ず max-w-none を付与する。%幅指定が効いていない場合はTailwind preflightのmax-width:100%を疑う。",
+  "severity": "S2",
+  "cost": {
+    "minutes": 90,
+    "impact": "LPの主要ビジュアルが壊れた状態で複数コミットがリリースされた。ユーザーが手動確認を繰り返す必要があった。"
+  },
+  "tags": ["css", "tailwind", "next-image", "max-width", "preflight", "sp-layout", "flex-bfc"],
+  "evidence": [
+    "commit b6adab5: overflow-hiddenをSPコンテナから除去(BFC回避)",
+    "commit 78d4be2: SPイラストをsectionレベルに移動",
+    "commit 494bbe0: max-w-noneを追加して根本解決"
+  ]
+}
