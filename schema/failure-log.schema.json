@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/failure-log.schema.json",
+  "title": "FailureLog",
+  "type": "object",
+  "required": [
+    "id",
+    "date",
+    "repo",
+    "commit",
+    "intent",
+    "mismatch_type",
+    "symptom",
+    "root_cause",
+    "detection",
+    "fix",
+    "preventive_rule",
+    "severity",
+    "cost"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 3 },
+    "date": { "type": "string", "format": "date" },
+    "repo": { "type": "string", "minLength": 1 },
+    "commit": { "type": "string", "minLength": 7 },
+    "intent": { "type": "string", "minLength": 1 },
+    "mismatch_type": {
+      "type": "string",
+      "enum": ["recognition_gap", "implementation_error", "env_precondition_miss", "release_process_gap", "security_gap", "performance_gap"]
+    },
+    "symptom": { "type": "string", "minLength": 1 },
+    "root_cause": { "type": "string", "minLength": 1 },
+    "detection": { "type": "string", "minLength": 1 },
+    "fix": { "type": "string", "minLength": 1 },
+    "preventive_rule": { "type": "string", "minLength": 1 },
+    "severity": { "type": "string", "enum": ["S1", "S2", "S3", "S4"] },
+    "cost": {
+      "type": "object",
+      "required": ["minutes", "impact"],
+      "properties": {
+        "minutes": { "type": "integer", "minimum": 0 },
+        "impact": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "evidence": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "additionalProperties": false
+}

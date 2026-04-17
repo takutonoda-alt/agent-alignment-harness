@@ -1,0 +1,20 @@
+{
+  "id": "FL-2026-04-12-001",
+  "date": "2026-04-12",
+  "repo": "pharmanavi",
+  "commit": "9f02a17",
+  "intent": "LPのヒーローを参照画像に合わせる",
+  "mismatch_type": "recognition_gap",
+  "symptom": "吹き出しをイラスト背面に置くべきところを横並びで実装",
+  "root_cause": "見た目調整前にレイヤー構造を固定していなかった",
+  "detection": "ユーザーから『全然違う』のフィードバック",
+  "fix": "DOMをabsolute重ね表示へ変更",
+  "preventive_rule": "デザイン再現はまずレイヤー条件を明文化してから実装する",
+  "severity": "S3",
+  "cost": {
+    "minutes": 30,
+    "impact": "再実装とレビュー往復が発生"
+  },
+  "tags": ["lp", "ui", "design"],
+  "evidence": ["apps/user/src/app/lp/page.tsx"]
+}

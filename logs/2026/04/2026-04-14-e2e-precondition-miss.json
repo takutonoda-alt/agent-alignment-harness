@@ -1,0 +1,20 @@
+{
+  "id": "FL-2026-04-14-001",
+  "date": "2026-04-14",
+  "repo": "pharmanavi",
+  "commit": "5b50563",
+  "intent": "E2E smokeを通してリリース確認する",
+  "mismatch_type": "env_precondition_miss",
+  "symptom": "localhostに未起動/別プロセスで404、env不足で500",
+  "root_cause": "テスト前提(起動先・env・対象ポート)の確認不足",
+  "detection": "smoke testのfetch failed/404/500",
+  "fix": "正しいenv読み込みで3100起動し、E2E_BASE_URLを指定",
+  "preventive_rule": "E2E実行前に起動確認、env確認、URL固定を行う",
+  "severity": "S2",
+  "cost": {
+    "minutes": 40,
+    "impact": "検証遅延"
+  },
+  "tags": ["e2e", "env", "release"],
+  "evidence": ["scripts/e2e-smoke.mjs"]
+}
