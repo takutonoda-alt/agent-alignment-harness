@@ -1,0 +1,20 @@
+{
+  "id": "FL-2026-04-15-001",
+  "date": "2026-04-15",
+  "repo": "pharmanavi",
+  "commit": "202c89a",
+  "intent": "worker API認証を安全にする",
+  "mismatch_type": "security_gap",
+  "symptom": "worker endpointがquery token認証を許容し、URL露出リスクがあった",
+  "root_cause": "運用利便性を優先して認証媒体を厳格化していなかった",
+  "detection": "API実装レビューで isAuthorized が token query を許容していることを確認",
+  "fix": "Authorization Bearerのみ許可へ変更し、runbookも更新",
+  "preventive_rule": "機密トークンはURLクエリで受け取らず、ヘッダ認証に限定する",
+  "severity": "S2",
+  "cost": {
+    "minutes": 35,
+    "impact": "認証情報漏えいの潜在リスク"
+  },
+  "tags": ["security", "auth", "worker"],
+  "evidence": ["apps/user/src/app/api/line/push-jobs/route.ts", "apps/user/src/app/api/seo/indexing/route.ts"]
+}

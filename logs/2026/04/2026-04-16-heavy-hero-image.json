@@ -1,0 +1,20 @@
+{
+  "id": "FL-2026-04-16-002",
+  "date": "2026-04-16",
+  "repo": "pharmanavi",
+  "commit": "c271942",
+  "intent": "LPの視覚品質を維持しつつ初速を落とさない",
+  "mismatch_type": "performance_gap",
+  "symptom": "ヒーロー画像が大きく、LP初回表示コストが増加",
+  "root_cause": "画像最適化戦略なしで大型PNGをそのまま使用していた",
+  "detection": "publicアセット容量確認で hero-illustration.png が約1.1MB",
+  "fix": "next/image化とsizes指定を導入、画像配信の最適化を適用",
+  "preventive_rule": "LCP候補画像はnext/imageと適切なsizes指定を必須にする",
+  "severity": "S2",
+  "cost": {
+    "minutes": 30,
+    "impact": "モバイル体感速度の低下"
+  },
+  "tags": ["performance", "image", "lp"],
+  "evidence": ["apps/user/src/app/lp/page.tsx", "apps/user/public/hero-illustration.png"]
+}

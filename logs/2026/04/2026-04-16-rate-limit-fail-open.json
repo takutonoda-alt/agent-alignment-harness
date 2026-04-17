@@ -1,0 +1,20 @@
+{
+  "id": "FL-2026-04-16-001",
+  "date": "2026-04-16",
+  "repo": "pharmanavi",
+  "commit": "c271942",
+  "intent": "高負荷時でも分散レート制限を安定させる",
+  "mismatch_type": "security_gap",
+  "symptom": "Redis不達時にメモリへフォールバックし、分散制限が実質fail-openになり得た",
+  "root_cause": "requireDistributed時の本番fail-close条件が弱かった",
+  "detection": "rate-limit実装レビューで fallback 分岐を確認",
+  "fix": "本番かつdistributed要求時はRedis未設定/不達で503返却に変更",
+  "preventive_rule": "分散前提の防御は本番でfail-closeをデフォルトにする",
+  "severity": "S1",
+  "cost": {
+    "minutes": 45,
+    "impact": "アクセス集中時の防御低下リスク"
+  },
+  "tags": ["security", "rate-limit", "scale"],
+  "evidence": ["packages/api/src/rate-limit.ts", ".env.example"]
+}

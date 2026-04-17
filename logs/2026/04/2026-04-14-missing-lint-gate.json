@@ -1,0 +1,20 @@
+{
+  "id": "FL-2026-04-14-002",
+  "date": "2026-04-14",
+  "repo": "pharmanavi",
+  "commit": "5b50563",
+  "intent": "リリース前の全体品質ゲートを実行する",
+  "mismatch_type": "release_process_gap",
+  "symptom": "lintがESLint未導入で実行不可、実質的に静的検査が欠落",
+  "root_cause": "CI/ローカルの品質ゲートに必要依存の前提を固定していなかった",
+  "detection": "pnpm lintで 'ESLint must be installed' エラー",
+  "fix": "lint未実行を失敗扱いで報告し、依存導入をタスク化",
+  "preventive_rule": "リリース可否判定では『未実行チェック』を明示し、pass扱いにしない",
+  "severity": "S2",
+  "cost": {
+    "minutes": 25,
+    "impact": "品質判定の信頼性低下"
+  },
+  "tags": ["lint", "release", "quality-gate"],
+  "evidence": ["pnpm lint output", "apps/*/package.json"]
+}

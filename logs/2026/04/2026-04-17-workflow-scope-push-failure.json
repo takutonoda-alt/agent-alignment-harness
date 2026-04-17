@@ -1,0 +1,20 @@
+{
+  "id": "FL-2026-04-17-001",
+  "date": "2026-04-17",
+  "repo": "agent-alignment-harness",
+  "commit": "dcb58c7",
+  "intent": "新規リポジトリを初回pushして運用開始する",
+  "mismatch_type": "env_precondition_miss",
+  "symptom": "workflowファイルを含むpushがOAuth scope不足で拒否された",
+  "root_cause": "GitHubトークンのworkflow権限前提を事前確認していなかった",
+  "detection": "remote rejected: refusing to allow an OAuth App to create or update workflow",
+  "fix": "workflowを一時除外して初回push後、権限更新タスクを分離",
+  "preventive_rule": "新規repo初回push前に必要GitHub権限(scope)をチェックする",
+  "severity": "S3",
+  "cost": {
+    "minutes": 15,
+    "impact": "初回公開フローの手戻り"
+  },
+  "tags": ["github", "permissions", "release"],
+  "evidence": ["gh repo create output", "git push remote rejected message"]
+}
